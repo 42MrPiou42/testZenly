@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;proj&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../ipble" />
+      <root url="file://$PROJECT_DIR$/../ValidMe" />
+      <root url="file://$PROJECT_DIR$/../ObstaCms" />
+      <root url="file://$PROJECT_DIR$/../libweb" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../ipble" />
+      <root url="file://$PROJECT_DIR$/../ValidMe" />
+      <root url="file://$PROJECT_DIR$/../ObstaCms" />
+      <root url="file://$PROJECT_DIR$/../libweb" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>

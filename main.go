@@ -64,9 +64,10 @@ func start(f *os.File) {
 			if usr == nil {
 				usr = Dt.AddUser(id, pos, tm)
 			} else {
-				Dt.Leaving(usr, pos;Wqa)
+				usr.Pos = pos
+				Dt.Leaving(usr)
 			}
-
+			Dt.UpdateKey(usr)
 		}
 	}
 	fmt.Println("THE END :D")

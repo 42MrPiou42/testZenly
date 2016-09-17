@@ -2,13 +2,7 @@ package user
 
 import (
 	"time"
-)
-
-const (
-	latM1 = 0x00000001 //Latitude + 1
-	latL1 = 0x00000010 //Latitude - 1
-	lonM1 = 0x00000100 //Longitude + 1
-	lonL1 = 0x00001000 //Latitude - 1
+	"fmt"
 )
 
 type Position struct {
@@ -29,3 +23,22 @@ func NewUser(id uint64, pos Position, tm time.Duration) (User) {
 	return User{Uuid:id, Pos:pos, Time:tm, Colliders: make(map[uint64]*User)}
 }
 
+func (us *User)LeaveUser(idOther uint64) {
+	if us.Uuid < idOther {
+		fmt.Println(us.Uuid, " a quitté ", idOther)
+	}
+	delete(us.Colliders, idOther)
+}
+
+func (us *User)JoinUser(usOther *User) {
+	if (us.Uuid < usOther.Uuid) {
+		fmt.Println(us.Uuid, " est avec ", usOther.Uuid)
+	}
+	us.Colliders[usOther.Uuid] = usOther
+}
+
+func (us *User)GetKeys(precision uint) (pos Position) {
+	pos.Lon = float64(int(us.Pos.Lon * precision)) / precision
+	pos.Lat = float64(int(us.Pos.Lat * precision)) / precision
+	return
+}

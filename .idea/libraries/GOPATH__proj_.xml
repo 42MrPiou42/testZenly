@@ -2,6 +2,8 @@
   <library name="GOPATH &lt;proj&gt;">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../tests" />
+      <root url="file://$PROJECT_DIR$/../createCsvFile" />
       <root url="file://$PROJECT_DIR$/../ipble" />
       <root url="file://$PROJECT_DIR$/../ValidMe" />
       <root url="file://$PROJECT_DIR$/../ObstaCms" />
@@ -10,6 +12,8 @@
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../tests" />
+      <root url="file://$PROJECT_DIR$/../createCsvFile" />
       <root url="file://$PROJECT_DIR$/../ipble" />
       <root url="file://$PROJECT_DIR$/../ValidMe" />
       <root url="file://$PROJECT_DIR$/../ObstaCms" />

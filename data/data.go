@@ -2,94 +2,132 @@ package data
 
 import (
 	us "proj/user"
-	"time"
+	geo "github.com/kellydunn/golang-geo"
+	"math"
+	_ "fmt"
+	"fmt"
 )
 
 const (
-	PRECISION = 10000
-	UNIT_PRECISION = 0.1 / (PRECISION / 10)
-	latM1 = 0x00000001 //Latitude + 1
-	latL1 = 0x00000010 //Latitude - 1
-	lonM1 = 0x00000100 //Longitude + 1
-	lonL1 = 0x00001000 //Latitude - 1
+	UNIT_PRECISION = 0.1 / (us.PRECISION_TRUNC / 10)
+	LIMIT_PRECISION = UNIT_PRECISION - math.SmallestNonzeroFloat64
+	UNION_DISTANCE_KM = 0.01
+	LATM1 = uint8(1) // Latitude + UNIT_PRECISION
+	LATL1 = uint8(1) << 1 // Latitude - UNIT_PRECISION
+	LONM1 = uint8(1) << 2 // Longitude + UNIT_PRECISION
+	LONL1 = uint8(1) << 3 // Longitude - UNIT_PRECISION
 )
 
 type Data struct {
-	Users map[uint64]us.User
-	BigData map[float64]map[float64]map[uint64]*us.User
+	Users map[int64]*us.User
+	Chunks map[float64]map[float64]map[int64]*us.User
 }
 
-func GetData() (dt Data) {
-	dt.Users = make(map[uint64]us.User)
-	return
+func (dt *Data) SetData() {
+	dt.Users = make(map[int64]*us.User)
+	dt.Chunks = make(map[float64]map[float64]map[int64]*us.User)
 }
 
-func (Dt Data) GetUser(id uint64) (*us.User) {
-	if usr, ok := Dt.Users[id]; ok == true {
-		return &usr
+func (dt *Data) AddUser(id int64, pos *us.Position, tm int64) (*us.User) {
+	usr, ok := dt.Users[id]
+	if ok == false {
+		usr = us.CreateUser(id)
 	}
+	usr.SetPosition(pos)
+	usr.SetTime(tm)
+	if ok == false {
+		dt.Users[id] = usr
+	}
+	return usr
+}
+
+func (dt *Data) deleteOldChunks(usr *us.User) {
+	if mapUser, ok := dt.Chunks[usr.Key.Lat][usr.Key.Lon]; ok {
+		delete(mapUser, usr.Uuid)
+	}
+	if usr.Flag > 0 {
+		if usr.Flag & LATM1 == LATM1 {
+			usr.Key.Lat += UNIT_PRECISION
+		}
+		if usr.Flag & LATL1 == LATL1 {
+			usr.Key.Lat -= UNIT_PRECISION
+		}
+		if usr.Flag & LONM1 == LONM1 {
+			usr.Key.Lon += UNIT_PRECISION
+		}
+		if usr.Flag & LONL1 == LONL1 {
+			usr.Key.Lon -= UNIT_PRECISION
+		}
+		if mapUser, ok := dt.Chunks[usr.Key.Lat][usr.Key.Lon]; ok {
+			delete(mapUser, usr.Uuid)
+		}
+	}
+}
+
+func (dt *Data) addChunks(usr *us.User) {
+	if _, ok := dt.Chunks[usr.Key.Lat][usr.Key.Lon][usr.Uuid]; ok == false {
+		if _, ok := dt.Chunks[usr.Key.Lat]; ok == false {
+			dt.Chunks[usr.Key.Lat] = make(map[float64]map[int64]*us.User)
+		}
+		if _, ok := dt.Chunks[usr.Key.Lat][usr.Key.Lon]; ok == false {
+			dt.Chunks[usr.Key.Lat][usr.Key.Lon] = make(map[int64]*us.User)
+		}
+		dt.Chunks[usr.Key.Lat][usr.Key.Lon][usr.Uuid] = usr
+	}
+	usr.Flag = 0
+	switch {
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat + UNIT_PRECISION, usr.Key.Lon + UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATM1
+		usr.Flag |= LONM1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat + UNIT_PRECISION, usr.Key.Lon)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATM1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat + UNIT_PRECISION, usr.Key.Lon - UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATM1
+		usr.Flag |= LONL1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat - UNIT_PRECISION, usr.Key.Lon + UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATL1
+		usr.Flag |= LONM1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat - UNIT_PRECISION, usr.Key.Lon)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATL1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat - UNIT_PRECISION, usr.Key.Lon - UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LATL1
+		usr.Flag |= LONL1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat, usr.Key.Lon + UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LONM1
+	case usr.Pos.GreatCircleDistance(geo.NewPoint(usr.Key.Lat, usr.Key.Lon - UNIT_PRECISION)) < UNION_DISTANCE_KM:
+		usr.Flag |= LONL1
+	default:
+		usr.Flag = 0
+	}
+}
+
+func (dt *Data) UpdateChunks(usr *us.User) (error) {
+	pos, er := us.CreatePosition(usr.Pos.Lng(), usr.Pos.Lat())
+	if er != nil {
+		return er
+	}
+	pos.TruncateMe()
+	if usr.CompareKey(pos) == false {
+		dt.deleteOldChunks(usr)
+	}
+	usr.UpdateKey(pos)
+	dt.addChunks(usr)
 	return nil
 }
 
-func (Dt Data) AddUser(id uint64, pos us.Position, tm time.Duration) (*us.User) {
-	Dt.Users[id] = us.NewUser(id, pos, tm)
-	return &(Dt.Users[id])
-}
-
-func (Dt Data) Leaving(usr *us.User) {
-	for idx, elem := range usr.Colliders {
-		if distance(elem, usr) >= 10.0 { // check la distance.
-			go elem.LeaveUser(usr.Uuid)
-			go usr.LeaveUser(idx)
-		}
-	}
-}
-
-func (Dt Data)checkAround(usr *us.User, pos us.Position) {
-	if mapUser, ok := Dt.BigData[pos.Lat][pos.Lon]; ok {
-		for _, tmpUser := range mapUser {
-			if _, ok := usr.Colliders[tmpUser.Uuid]; ok == false && distance(tmpUser, usr) < 10.0 {
-				tmpUser.JoinUser(usr)
-				usr.JoinUser(tmpUser)
+func (dt *Data) PrintData() {
+	fmt.Println("Size nbr Users: ", len(dt.Users))
+	fmt.Println("Size nbr Map Lat Key: ", len(dt.Chunks))
+	for latkey, mapLon := range dt.Chunks {
+		fmt.Println("Lat-Key: ", latkey)
+		fmt.Println("Size relation lonKey: ", len(mapLon))
+		for lonkey, mapUser := range mapLon {
+			fmt.Println("Lon-Key: ", lonkey)
+			fmt.Println("Size relation User: ", len(mapUser))
+			for id, Usr := range dt.Chunks[latkey][lonkey] {
+				fmt.Println("User id: ", id)
+				fmt.Println("Nbr Collider: ", len(Usr.Colliders))
 			}
 		}
 	}
-}
-
-func (Dt Data) DeleteUserFromBD(usr *us.User) {
-	if mapUser, ok := Dt.BigData[usr.Pos.Lat][usr.Pos.Lon]; ok {
-		delete(mapUser, usr.Uuid)
-	}
-	if usr.Flag & latM1 == latM1 {
-		if mapUser, ok := Dt.BigData[usr.Pos.Lat + UNIT_PRECISION][usr.Pos.Lon]; ok {
-			delete(mapUser, usr.Uuid)
-		}
-	}
-	if usr.Flag & latL1 == latL1 {
-		if mapUser, ok := Dt.BigData[usr.Pos.Lat - UNIT_PRECISION][usr.Pos.Lon]; ok {
-			delete(mapUser, usr.Uuid)
-		}
-	}
-	if usr.Flag & lonM1 == lonM1 {
-		if mapUser, ok := Dt.BigData[usr.Pos.Lat][usr.Pos.Lon + UNIT_PRECISION]; ok {
-			delete(mapUser, usr.Uuid)
-		}
-	}
-	if usr.Flag & lonL1 == lonL1 {
-		if mapUser, ok := Dt.BigData[usr.Pos.Lat][usr.Pos.Lon - UNIT_PRECISION]; ok {
-			delete(mapUser, usr.Uuid)
-		}
-	}
-}
-
-func (Dt Data) UpdateKey(usr *us.User) {
-	pos := usr.GetKeys(PRECISION)
-	if pos.Lon != usr.Key.Lon || pos.Lat != usr.Key.Lat {
-		Dt.DeleteUserFromBD(usr)
-	}
-	// Check si la key est identique
-		// Si c'est pas le cas Update et delete le pointer user de l'ancienne
-
-	Dt.checkAround(usr, pos)
-	// Rajouter les options
 }

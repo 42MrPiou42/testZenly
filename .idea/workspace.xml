@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d01442a2-f9e2-41bd-927e-3b9c31f351e5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/manager/manager.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proj" afterPath="$PROJECT_DIR$/proj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/GOPATH__proj_.xml" afterPath="$PROJECT_DIR$/.idea/libraries/GOPATH__proj_.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/data.go" afterPath="$PROJECT_DIR$/data/data.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.csv" afterPath="$PROJECT_DIR$/test.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user/user.go" afterPath="$PROJECT_DIR$/user/user.go" />
     </list>
     <ignored path="proj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +22,60 @@
     <favorites_list name="proj" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <splitter split-orientation="horizontal" split-proportion="0.329934">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="data.go" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/data/data.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1665">
+                  <caret line="113" column="24" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+                  <folding>
+                    <element signature="e#14#103#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <splitter split-orientation="horizontal" split-proportion="0.47281832">
+          <split-first>
+            <leaf>
+              <file leaf-file-name="manager.go" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/manager/manager.go">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="1006">
+                      <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+                      <folding>
+                        <element signature="e#17#111#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file leaf-file-name="user.go" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/user/user.go">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="930">
+                      <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+                      <folding>
+                        <element signature="e#14#91#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -70,7 +116,6 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
     <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
@@ -102,9 +147,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -151,8 +193,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="proj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="proj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -161,8 +220,8 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../createCsvFile/main.go" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -614,15 +673,16 @@
       <workItem from="1474134426737" duration="9982000" />
       <workItem from="1474184072962" duration="2993000" />
       <workItem from="1474208882674" duration="20787000" />
+      <workItem from="1474285558158" duration="559000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33790000" />
+    <option name="totallyTimeSpent" value="34349000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -635,7 +695,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13177083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13177083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,7 +730,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,7 +757,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -706,7 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -714,7 +771,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -728,9 +784,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/manager/manager.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1006">
+          <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+          <folding>
+            <element signature="e#17#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data/data.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
+        <state relative-caret-position="1665">
           <caret line="113" column="24" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
           <folding>
             <element signature="e#14#103#0" expanded="true" />
@@ -740,20 +806,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/user/user.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
+        <state relative-caret-position="930">
           <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
           <folding>
             <element signature="e#14#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manager/manager.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
-          <folding>
-            <element signature="e#17#111#0" expanded="true" />
           </folding>
         </state>
       </provider>

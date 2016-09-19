@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../github.com" />
       <root url="file://$PROJECT_DIR$/../tests" />
+      <root url="file://$PROJECT_DIR$/../cd" />
       <root url="file://$PROJECT_DIR$/../createCsvFile" />
       <root url="file://$PROJECT_DIR$/../ipble" />
       <root url="file://$PROJECT_DIR$/../ValidMe" />
@@ -13,6 +14,7 @@
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../github.com" />
       <root url="file://$PROJECT_DIR$/../tests" />
+      <root url="file://$PROJECT_DIR$/../cd" />
       <root url="file://$PROJECT_DIR$/../createCsvFile" />
       <root url="file://$PROJECT_DIR$/../ipble" />
       <root url="file://$PROJECT_DIR$/../ValidMe" />

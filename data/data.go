@@ -32,6 +32,10 @@ func (dt *Data) AddUser(id int64, pos *us.Position, tm int64) (*us.User) {
 	usr, ok := dt.Users[id]
 	if ok == false {
 		usr = us.CreateUser(id)
+	} else {
+		if usr.Pos.GreatCircleDistance(geo.NewPoint(pos.Lat, pos.Lon)) < UNION_DISTANCE_KM {
+			return nil
+		}
 	}
 	usr.SetPosition(pos)
 	usr.SetTime(tm)
@@ -98,6 +102,28 @@ func (dt *Data) addChunks(usr *us.User) {
 		usr.Flag |= LONL1
 	default:
 		usr.Flag = 0
+	}
+	pos, _ := us.CreatePosition(usr.Pos.Lng(), usr.Pos.Lat())
+	if usr.Flag & LATM1 == LATM1 {
+		pos.Lat += UNIT_PRECISION
+	}
+	if usr.Flag & LATL1 == LATL1 {
+		pos.Lat -= UNIT_PRECISION
+	}
+	if usr.Flag & LONM1 == LONM1 {
+		pos.Lon += UNIT_PRECISION
+	}
+	if usr.Flag & LONL1 == LONL1 {
+		pos.Lon -= UNIT_PRECISION
+	}
+	if _, ok := dt.Chunks[pos.Lat][pos.Lon][usr.Uuid]; ok == false {
+		if _, ok := dt.Chunks[pos.Lat]; ok == false {
+			dt.Chunks[pos.Lat] = make(map[float64]map[int64]*us.User)
+		}
+		if _, ok := dt.Chunks[pos.Lat][pos.Lon]; ok == false {
+			dt.Chunks[pos.Lat][pos.Lon] = make(map[int64]*us.User)
+		}
+		dt.Chunks[pos.Lat][pos.Lon][usr.Uuid] = usr
 	}
 }
 

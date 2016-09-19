@@ -84,12 +84,18 @@ func browseChunks(usr *us.User, dt *data.Data) {
 	}
 }
 
+/*
+** If usr == null, ignore this request.
+ */
 func process(rec []string, dt *data.Data) {
 	id, pos, tm, er := parseRecord(rec)
 	if er != nil {
 		return
 	}
 	usr := dt.AddUser(id, pos, tm) // Add User if exist, else he was created
+	if usr == nil {
+		return
+	}
 	leavingColliders(usr)
 	if er = dt.UpdateChunks(usr); er != nil {
 		return
@@ -107,7 +113,7 @@ func Manager(f *os.File) (error) {
 	for i := 0; i >= 0; i++ {
 		record, er := r.Read()
 		if er == io.EOF {
-			dt.PrintData()
+			//dt.PrintData()
 			return nil
 		} else if er != nil {
 			return er

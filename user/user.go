@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	PRECISION_TRUNC = 10000
+	PRECISION_TRUNC = 1000
 )
 
 type Position struct {
